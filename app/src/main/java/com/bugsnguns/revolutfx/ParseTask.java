@@ -60,7 +60,7 @@ public class ParseTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String strJson) {
         super.onPostExecute(strJson);
-        // выводим целиком полученную json-строку
+        // entire JSON-string
         Log.d(LOG_TAG, strJson);
 
         JSONObject dataJsonObj = null;
