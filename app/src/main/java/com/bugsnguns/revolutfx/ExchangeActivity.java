@@ -3,6 +3,7 @@ package com.bugsnguns.revolutfx;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 public class ExchangeActivity extends AppCompatActivity {
 
@@ -14,6 +15,10 @@ public class ExchangeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //create CurrencyDB object
+        db = new CurrencyDB(this);
+        Log.v("DBTag", "DB created");
+
         //create DataHandler object
         dataHandler = new DataHandler();
 

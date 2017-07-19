@@ -11,14 +11,10 @@ import android.content.Context;
 public class DataHandler {
 
     private Context context;
-    public CurrencyDB db;
     public double lastRateUSD;
     public double getLastRateGBP;
 
     public DataHandler () {
-
-        //db = new CurrencyDB(context.getApplicationContext());
-        //db.getWritableDatabase();
 
         //lastRateUSD и getLastRateGBP присваиваем значения из БД
     }
