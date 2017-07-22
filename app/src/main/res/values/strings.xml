@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">RevolutFX</string>
+    <string name="edit_text_hint">0.00</string>
+    <string name="text_view_hint">0.00</string>
+
+    <string-array name="currency_names">
+        <item>EUR</item>
+        <item>USD</item>
+        <item>GBP</item>
+    </string-array>
+
 </resources>

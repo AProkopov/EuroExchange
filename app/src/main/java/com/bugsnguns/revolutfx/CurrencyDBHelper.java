@@ -41,10 +41,9 @@ public class CurrencyDBHelper extends SQLiteOpenHelper {
 
     public void onWrite() {
         Log.v(LOG_TAG, "Going to clear and recreate DB");
-        db.execSQL("DROP TABLE IF EXISTS "+ "CURRENCY");
+        db.execSQL("DROP TABLE IF EXISTS " + "CURRENCY");
         onCreate(db);
         Log.v(LOG_TAG, "DB cleared and recreated successfully");
-
 
 
         //writing lastRateUSD to DB
@@ -66,7 +65,7 @@ public class CurrencyDBHelper extends SQLiteOpenHelper {
     public void createCursor() {
         db = this.getWritableDatabase();
         cursor = db.query("CURRENCY",
-                new String[] {"RATE"},
+                new String[]{"RATE"},
                 null, null, null, null, null);
         Log.v(LOG_TAG, "rows count in table CURRENCY " + cursor.getCount());
     }
