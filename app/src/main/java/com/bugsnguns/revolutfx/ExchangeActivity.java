@@ -36,18 +36,15 @@ public class ExchangeActivity extends AppCompatActivity {
             public void run(){
                 //get JSON and parse
                 new ParseTask().execute();
-                //
-                dbHelper.onWrite();
-                //
                 handler.postDelayed(this, delay);
             }
         }, delay);
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStop() {
         //save last currency rates in DB
         dbHelper.onWrite();
-        super.onDestroy();
+        super.onStop();
     }
 }
