@@ -19,7 +19,7 @@ public class CurrencyDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "LastCurrency.dbHelper";
     public SQLiteDatabase db;
     public Cursor cursor;
-    public DataHandler dataHandler = ExchangeActivity.dataHandler;
+
 
     //constructor
     public CurrencyDBHelper(Context context) {
@@ -45,21 +45,22 @@ public class CurrencyDBHelper extends SQLiteOpenHelper {
         onCreate(db);
         Log.v(LOG_TAG, "DB cleared and recreated successfully");
 
-        /*
-        //adding lastRateUSD to DB
+
+
+        //writing lastRateUSD to DB
         ContentValues usdValues = new ContentValues();
         usdValues.put("NAME", "USD");
-        usdValues.put("RATE", dataHandler.lastRateUSD);
+        usdValues.put("RATE", ExchangeActivity.dataHandler.lastRateUSD);
         db.insert("CURRENCY", null, usdValues);
         Log.v(LOG_TAG, "USD rate saved to DB successfully");
 
-        //adding lastRateGBP to DB
+        //writing lastRateGBP to DB
         ContentValues gbpValues = new ContentValues();
-        usdValues.put("NAME", "GBP");
-        usdValues.put("RATE", dataHandler.lastRateGBP);
+        gbpValues.put("NAME", "GBP");
+        gbpValues.put("RATE", ExchangeActivity.dataHandler.lastRateGBP);
         db.insert("CURRENCY", null, gbpValues);
         Log.v(LOG_TAG, "GBP rate saved to DB successfully");
-        */
+
     }
 
     public void createCursor() {

@@ -18,12 +18,16 @@ public class DataHandler {
     public DataHandler () {
 
         //set values lastRateUSD and getLastRateGBP from DB
+        Log.v(LOG_TAG, "DataHandler constructor called");
         db = ExchangeActivity.dbHelper;
         db.createCursor();
         if(db.cursor.getCount() != 0) {
-            lastRateUSD = db.cursor.getDouble(1);
-            db.cursor.moveToNext();
-            lastRateGBP = db.cursor.getDouble(1);
+            db.cursor.moveToLast();
+            lastRateGBP = db.cursor.getDouble(0);
+            Log.v(LOG_TAG, "saved rate of lastRateGBP is " + lastRateGBP);
+            db.cursor.moveToPrevious();
+            lastRateUSD = db.cursor.getDouble(0);
+            Log.v(LOG_TAG, "saved rate of lastRateUSD is " + lastRateUSD);
         }
 
     }
