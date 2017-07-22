@@ -8,16 +8,17 @@ import android.util.Log;
 public class ExchangeActivity extends AppCompatActivity {
 
 
-    public CurrencyDB db;
+    public static CurrencyDBHelper dbHelper;
     private Handler handler;
-    private int delay = 3000;
-    private DataHandler dataHandler;
+    private int delay = 7000;
+    public static DataHandler dataHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //create CurrencyDB object
-        db = new CurrencyDB(this);
+        //create CurrencyDBHelper object
+        dbHelper = new CurrencyDBHelper(this);
         Log.v("DBTag", "DB created");
+        dbHelper.createCursor();
 
         //create DataHandler object
         dataHandler = new DataHandler();
@@ -35,6 +36,9 @@ public class ExchangeActivity extends AppCompatActivity {
             public void run(){
                 //get JSON and parse
                 new ParseTask().execute();
+                //
+                dbHelper.onWrite();
+                //
                 handler.postDelayed(this, delay);
             }
         }, delay);
@@ -42,8 +46,8 @@ public class ExchangeActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        //данные о последних курсах сохраняются в бд
-        //код сохранения
+        //save last currency rates in DB
+        dbHelper.onWrite();
         super.onDestroy();
     }
 }

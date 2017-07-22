@@ -16,12 +16,10 @@ import java.net.URL;
 
 public class ParseTask extends AsyncTask<Void, Void, String> {
 
-    public static String LOG_TAG = "my_log";
+    public static String LOG_TAG = "ParseTask_LOG";
     private static final String TAG_USD = "USD";
     private static final String TAG_GBP = "GBP";
     private static final String TAG_RATES = "rates";
-
-
     private HttpURLConnection urlConnection = null;
     private BufferedReader reader = null;
     private String resultJson = "";
@@ -72,6 +70,7 @@ public class ParseTask extends AsyncTask<Void, Void, String> {
             double valueGBP = ratesJSON.getDouble(TAG_GBP);
             Log.d(LOG_TAG, "valueUSD is " + valueUSD);
             Log.d(LOG_TAG, "valueGBP is " + valueGBP);
+            ExchangeActivity.dataHandler.checkCurrencyUpdate(valueUSD, valueGBP);
 
         } catch (JSONException e) {
             e.printStackTrace();
