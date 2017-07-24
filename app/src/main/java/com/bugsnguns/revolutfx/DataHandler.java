@@ -1,8 +1,6 @@
 package com.bugsnguns.revolutfx;
 
-
 import android.util.Log;
-
 import java.math.BigDecimal;
 
 /**
@@ -12,17 +10,16 @@ import java.math.BigDecimal;
 // handling data (currencies from JSON, SQLite)
 public class DataHandler {
 
-    public static String LOG_TAG = "DataHandler_LOG";
-    public volatile double lastRateUSD;
-    public volatile double lastRateGBP;
     public CurrencyDBHelper db;
+    private static String LOG_TAG = "DataHandler_LOG";
+    private volatile double lastRateUSD;
+    private volatile double lastRateGBP;
 
     //rateFrom and rateTo uses handle rates of currencies that chosen in ExchangeActivity UI
-    public double rateFrom;
-    public double rateTo;
+    private double rateFrom;
+    private double rateTo;
 
     public DataHandler() {
-
         //set values lastRateUSD and getLastRateGBP from DB
         Log.v(LOG_TAG, "DataHandler constructor called");
         db = ExchangeActivity.dbHelper;
@@ -36,6 +33,23 @@ public class DataHandler {
             Log.v(LOG_TAG, "saved rate of lastRateUSD is " + lastRateUSD);
         }
 
+    }
+
+    //getters and setters for private variables
+    public double getLastRateUSD() {
+        return lastRateUSD;
+    }
+
+    public double getLastRateGBP() {
+        return lastRateGBP;
+    }
+
+    public void setRateFrom(double rateFrom) {
+        this.rateFrom = rateFrom;
+    }
+
+    public void setRateTo(double rateTo) {
+        this.rateTo = rateTo;
     }
 
     //method checks for currency rates changes and update lastValueUSD and lastValueGBP
@@ -56,9 +70,15 @@ public class DataHandler {
     }
 
     //method on Convert: connecting data between EditText and TextView in ExchangeActivity
-    public String onConvert (double value) {
-        BigDecimal result = BigDecimal.valueOf((rateTo / rateFrom * value))
-                .setScale(2, BigDecimal.ROUND_UP);
-        return result.toString();
+    //if there is no rateFrom value (no internet connection while the first launch)
+    public String onConvert(double value) {
+        try {
+            BigDecimal result = BigDecimal.valueOf((rateTo / rateFrom * value))
+                    .setScale(2, BigDecimal.ROUND_UP);
+            return result.toString();
+        } catch (ArithmeticException e) {
+            return BigDecimal.valueOf((0.00)).setScale(2, BigDecimal.ROUND_UP).toString();
+        }
+
     }
 }

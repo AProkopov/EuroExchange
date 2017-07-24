@@ -14,12 +14,11 @@ import android.util.Log;
 //Storing last currencies data
 public class CurrencyDBHelper extends SQLiteOpenHelper {
 
-    public static String LOG_TAG = "CurrencyDBHelper_LOG";
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "LastCurrency.dbHelper";
     public SQLiteDatabase db;
     public Cursor cursor;
-
+    private static String LOG_TAG = "CurrencyDBHelper_LOG";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "LastCurrency.dbHelper";
 
     //constructor
     public CurrencyDBHelper(Context context) {
@@ -39,29 +38,30 @@ public class CurrencyDBHelper extends SQLiteOpenHelper {
 
     }
 
+    //writing data in DB
     public void onWrite() {
         Log.v(LOG_TAG, "Going to clear and recreate DB");
         db.execSQL("DROP TABLE IF EXISTS " + "CURRENCY");
         onCreate(db);
         Log.v(LOG_TAG, "DB cleared and recreated successfully");
 
-
         //writing lastRateUSD to DB
         ContentValues usdValues = new ContentValues();
         usdValues.put("NAME", "USD");
-        usdValues.put("RATE", ExchangeActivity.dataHandler.lastRateUSD);
+        usdValues.put("RATE", ExchangeActivity.dataHandler.getLastRateUSD());
         db.insert("CURRENCY", null, usdValues);
         Log.v(LOG_TAG, "USD rate saved to DB successfully");
 
         //writing lastRateGBP to DB
         ContentValues gbpValues = new ContentValues();
         gbpValues.put("NAME", "GBP");
-        gbpValues.put("RATE", ExchangeActivity.dataHandler.lastRateGBP);
+        gbpValues.put("RATE", ExchangeActivity.dataHandler.getLastRateGBP());
         db.insert("CURRENCY", null, gbpValues);
         Log.v(LOG_TAG, "GBP rate saved to DB successfully");
 
     }
 
+    //creating Cursor to get data from DB
     public void createCursor() {
         db = this.getWritableDatabase();
         cursor = db.query("CURRENCY",
@@ -69,6 +69,4 @@ public class CurrencyDBHelper extends SQLiteOpenHelper {
                 null, null, null, null, null);
         Log.v(LOG_TAG, "rows count in table CURRENCY " + cursor.getCount());
     }
-
-
 }

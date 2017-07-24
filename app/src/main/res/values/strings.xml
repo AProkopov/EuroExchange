@@ -9,4 +9,6 @@
         <item>GBP</item>
     </string-array>
 
+    <string name="no_data_toast">No currency values</string>
+
 </resources>

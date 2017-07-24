@@ -17,13 +17,13 @@ public class ExchangeActivity extends AppCompatActivity {
 
 
     public static CurrencyDBHelper dbHelper;
+    public static DataHandler dataHandler;
+    private Spinner currencySpinnerFrom;
+    private Spinner currencySpinnerTo;
+    private EditText editText;
+    private TextView resultView;
     private Handler handler;
     private int delay = 30000;
-    public static DataHandler dataHandler;
-    public Spinner currencySpinnerFrom;
-    public Spinner currencySpinnerTo;
-    public EditText editText;
-    public TextView resultView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class ExchangeActivity extends AppCompatActivity {
         //Activity and UI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange);
-        resultViewBulder();
+        resultViewBuilder();
         editTextBuilder();
         spinnerBuilder();
 
@@ -63,7 +63,7 @@ public class ExchangeActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    protected void resultViewBulder() {
+    protected void resultViewBuilder() {
         resultView = (TextView) findViewById(R.id.resultView);
     }
 
@@ -74,7 +74,8 @@ public class ExchangeActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 updateResultView();
@@ -84,23 +85,23 @@ public class ExchangeActivity extends AppCompatActivity {
 
     //method for update resultView in case of any changes in Spinners or editText
     //checking that editText is not empty
-    protected void updateResultView () {
+    //if editText is empty -> result is zero
+    protected void updateResultView() {
         if (!editText.getText().toString().matches("")) {
             resultView.setText(dataHandler.onConvert(Double.parseDouble(editText.getText()
                     .toString())));
+        } else {
+            resultView.setText("0");
         }
     }
 
 
-    //метод spinnerBuilder() заполняет раскрывающиеся списки значениями
+    //spinnerBuilder() fills spinners by values
     protected void spinnerBuilder() {
-
-        //заполнение Spinner названиями валют
-
         currencySpinnerFrom = (Spinner) findViewById(R.id.currencySpinnerFrom);
         currencySpinnerTo = (Spinner) findViewById(R.id.currencySpinnerTo);
 
-        // Настраиваем адаптеры
+        // setting adapters
         ArrayAdapter<?> adapterFrom =
                 ArrayAdapter.createFromResource(this, R.array.currency_names,
                         android.R.layout.select_dialog_item);
@@ -111,11 +112,10 @@ public class ExchangeActivity extends AppCompatActivity {
                         android.R.layout.select_dialog_item);
         adapterTo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // Вызываем адаптеры
         currencySpinnerFrom.setAdapter(adapterFrom);
         currencySpinnerTo.setAdapter(adapterTo);
 
-        //обработчик выбора элемента Spinner (From)
+        //selection handler for Spinner (From)
         currencySpinnerFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -124,13 +124,13 @@ public class ExchangeActivity extends AppCompatActivity {
 
                 switch (chosenStr) {
                     case "EUR":
-                        dataHandler.rateFrom = 1.0;
+                        dataHandler.setRateFrom(1.0);
                         break;
                     case "USD":
-                        dataHandler.rateFrom = dataHandler.lastRateUSD;
+                        dataHandler.setRateFrom(dataHandler.getLastRateUSD());
                         break;
                     case "GBP":
-                        dataHandler.rateFrom = dataHandler.lastRateGBP;
+                        dataHandler.setRateFrom(dataHandler.getLastRateGBP());
                         break;
                 }
 
@@ -143,7 +143,7 @@ public class ExchangeActivity extends AppCompatActivity {
             }
         });
 
-        //обработчик выбора элемента Spinner (To)
+        //selection handler for Spinner (To)
         currencySpinnerTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -152,13 +152,13 @@ public class ExchangeActivity extends AppCompatActivity {
 
                 switch (chosenStr) {
                     case "EUR":
-                        dataHandler.rateTo = 1.0;
+                        dataHandler.setRateTo(1.0);
                         break;
                     case "USD":
-                        dataHandler.rateTo = dataHandler.lastRateUSD;
+                        dataHandler.setRateTo(dataHandler.getLastRateUSD());
                         break;
                     case "GBP":
-                        dataHandler.rateTo = dataHandler.lastRateGBP;
+                        dataHandler.setRateTo(dataHandler.getLastRateGBP());
                         break;
                 }
 
