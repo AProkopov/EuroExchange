@@ -1,7 +1,10 @@
-package com.bugsnguns.revolutfx;
+package com.bugsnguns.revolutfx.Presenter;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.bugsnguns.revolutfx.View.ExchangeActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;

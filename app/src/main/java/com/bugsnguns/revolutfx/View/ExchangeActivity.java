@@ -1,4 +1,4 @@
-package com.bugsnguns.revolutfx;
+package com.bugsnguns.revolutfx.View;
 
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.bugsnguns.revolutfx.Model.CurrencyDBHelper;
+import com.bugsnguns.revolutfx.Presenter.DataHandler;
+import com.bugsnguns.revolutfx.Presenter.ParseTask;
+import com.bugsnguns.revolutfx.R;
 
 public class ExchangeActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.bugsnguns.revolutfx;
+package com.bugsnguns.revolutfx.Model;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.bugsnguns.revolutfx.View.ExchangeActivity;
 
 /**
  * Created by Antonio on 19.07.2017.

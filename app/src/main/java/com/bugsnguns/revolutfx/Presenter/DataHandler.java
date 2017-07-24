@@ -1,6 +1,10 @@
-package com.bugsnguns.revolutfx;
+package com.bugsnguns.revolutfx.Presenter;
 
 import android.util.Log;
+
+import com.bugsnguns.revolutfx.Model.CurrencyDBHelper;
+import com.bugsnguns.revolutfx.View.ExchangeActivity;
+
 import java.math.BigDecimal;
 
 /**
